@@ -29,7 +29,7 @@ describe('Job Applications API', () => {
       .set('Authorization', `Bearer ${token}`)
       .send({
         title: 'Software Engineer',
-        description: 'Develop cool software',
+        description: 'Develop software',
         salary_range: '50k-70k',
         location: 'Remote',
       });
@@ -40,14 +40,14 @@ describe('Job Applications API', () => {
   it('should submit a job application and send an email notification', async () => {
     const res = await request(app).post('/api/applications').send({
       job_posting_id: jobId,
-      name: 'John Doe',
-      email: 'johndoe@example.com',
+      name: 'Test Test',
+      email: 'test@example.com',
       resume: 'Experienced software engineer with 5 years of experience.'
     });
 
     applicationId = res.body.application.id;
     expect(res.statusCode).toEqual(201);
-    expect(res.body.application).toHaveProperty('name', 'John Doe');
+    expect(res.body.application).toHaveProperty('name', 'Test Test');
   });
 
   it('should fetch job applications for a job posting', async () => {

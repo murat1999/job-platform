@@ -30,7 +30,7 @@ describe('Job Postings API', () => {
       .set('Authorization', `Bearer ${token}`)
       .send({
         title: 'Software Engineer',
-        description: 'Develop cool software',
+        description: 'Develop software',
         salary_range: '50k-70k',
         location: 'Remote',
       });
@@ -55,7 +55,7 @@ describe('Job Postings API', () => {
       .set('Authorization', `Bearer ${token}`)
       .send({
         title: 'Senior Software Engineer',
-        description: 'Develop even cooler software',
+        description: 'Develop best software',
         salary_range: '70k-100k',
         location: 'Remote',
       });
