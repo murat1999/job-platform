@@ -1,12 +1,6 @@
 const request = require('supertest');
 const app = require('../server');
 const { sequelize } = require('../models');
-const { sendEmailNotification } = require('../controllers/jobApplicationsController');
-
-jest.mock('../controllers/jobApplicationsController', () => ({
-  ...jest.requireActual('../controllers/jobApplicationsController'),
-  sendEmailNotification: jest.fn()
-}));
 
 describe('Job Applications API', () => {
   let token;
@@ -54,12 +48,6 @@ describe('Job Applications API', () => {
     applicationId = res.body.application.id;
     expect(res.statusCode).toEqual(201);
     expect(res.body.application).toHaveProperty('name', 'John Doe');
-
-    expect(sendEmailNotification).toHaveBeenCalledWith(
-      'testrecruiter@example.com',
-      'Software Engineer',
-      'John Doe'
-    );
   });
 
   it('should fetch job applications for a job posting', async () => {

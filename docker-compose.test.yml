@@ -3,7 +3,7 @@ services:
   app_test:
     build:
       context: .
-      dockerfile: Dockerfile.test  # Specify the Dockerfile for testing
+      dockerfile: Dockerfile.test
     environment:
       - NODE_ENV=test
       - DB_HOST=db_test
@@ -15,9 +15,11 @@ services:
     depends_on:
       db_test:
         condition: service_healthy
+    volumes:
+      - .:/usr/src/app
     networks:
       - job-network
-    command: npm test  # Automatically runs tests
+    command: npm test
 
   db_test:
     image: postgres:13
@@ -27,13 +29,18 @@ services:
       POSTGRES_DB: job_platform_test
     ports:
       - "5433:5432"
+    volumes:
+      - pgdata_test:/var/lib/postgresql/data
     networks:
       - job-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d job_platform_test"]
       interval: 10s
       timeout: 5s
       retries: 5
 
 networks:
   job-network:
+
+volumes:
+  pgdata_test:
